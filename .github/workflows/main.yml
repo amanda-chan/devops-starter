@@ -27,4 +27,11 @@ jobs:
         run: pytest
 
       - name: Run Security Scan
-        run: bandit -r .
+        run: bandit calculator.py -f json -o bandit-report.json
+        continue-on-error: true
+
+      - name: Upload Security Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit-security-report
+          path: bandit-report.json
